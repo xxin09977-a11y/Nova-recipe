@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+  --color-zinc-500: #71717a;
+  --color-zinc-400: #a1a1aa;
+  
+  --color-glass: rgba(255, 255, 255, 0.02);
+  --color-glass-border: rgba(255, 255, 255, 0.05);
+  
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+}
+
+@layer base {
+  :root {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    --font-scale: 1;
+    --app-text: #ffffff;
+  }
+
+  :root[data-theme="noir"] {
+    /* Uses default @theme values */
+  }
+
+  :root[data-theme="clay"] {
+    --color-zinc-950: #2a2424;
+    --color-zinc-900: #332d2d;
+    --color-zinc-800: #423939;
+    --color-zinc-500: #ca9d9d;
+    --color-zinc-400: #e0baba;
+    --color-glass: rgba(202, 157, 157, 0.04);
+    --color-glass-border: rgba(202, 157, 157, 0.1);
+    --app-text: #f1e5e5;
+  }
+
+  :root[data-theme="frost"] {
+    --color-zinc-950: #1a1c29;
+    --color-zinc-900: #232536;
+    --color-zinc-800: #2c2f45;
+    --color-zinc-500: #acaeda;
+    --color-zinc-400: #c5c7f0;
+    --color-glass: rgba(172, 174, 218, 0.04);
+    --color-glass-border: rgba(172, 174, 218, 0.1);
+    --app-text: #e2e5ff;
+  }
+
+  :root[data-theme="organic"] {
+    --color-zinc-950: #1e241e;
+    --color-zinc-900: #272f27;
+    --color-zinc-800: #333d33;
+    --color-zinc-500: #a3b18a;
+    --color-zinc-400: #b8c99e;
+    --color-glass: rgba(163, 177, 138, 0.04);
+    --color-glass-border: rgba(163, 177, 138, 0.1);
+    --app-text: #e5f1e5;
+  }
+
+  .light-theme {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 4%;
+    @apply bg-zinc-50 text-zinc-950;
+  }
+
+  .light-theme .glass {
+    @apply bg-black/5 border-black/10;
+  }
+
+  .light-theme .glass-dark {
+    @apply bg-white/80 border-black/5;
+  }
+
+  .light-theme .x-border {
+    @apply border-black/10;
+  }
+
+  .light-theme .editorial-title {
+    @apply text-zinc-900;
+  }
+  
+  .light-theme .text-zinc-500 {
+    @apply text-zinc-400;
+  }
+
+  html {
+    font-size: calc(16px * var(--font-scale));
+  }
+
+  body {
+    background-color: var(--color-zinc-950);
+    color: var(--app-text);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    @apply selection:bg-white/10 antialiased overflow-x-hidden;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@layer utilities {
+  .theme-text {
+    color: var(--color-zinc-500);
+  }
+
+  .glass {
+    background-color: var(--color-glass);
+    border-color: var(--color-glass-border);
+    @apply backdrop-blur-xl border;
+  }
+  
+  .glass-dark {
+    border-color: var(--color-glass-border);
+    @apply bg-black/60 backdrop-blur-3xl border;
+  }
+
+  .glass-card {
+    background-color: var(--color-glass);
+    border-color: var(--color-glass-border);
+    @apply backdrop-blur-xl border transition-all duration-500 shadow-[0_8px_32px_rgba(0,0,0,0.4)];
+  }
+  .glass-card:hover {
+    background-color: color-mix(in srgb, var(--color-glass) 90%, white);
+    border-color: color-mix(in srgb, var(--color-glass-border) 80%, white);
+  }
+
+  .three-d-card {
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-style: preserve-3d;
+    perspective: 1200px;
+  }
+
+  .three-d-card:hover {
+    transform: translateY(-8px) rotateX(2deg) rotateY(1deg);
+    @apply shadow-[0_30px_60px_rgba(0,0,0,0.6)];
+  }
+
+  .x-border {
+    @apply border border-white/[0.05];
+  }
+  
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .editorial-title {
+    @apply font-display font-bold tracking-tighter leading-[0.85] uppercase;
+  }
+
+  .interactive-scale {
+    @apply active:scale-[0.97] transition-transform duration-200;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-800 rounded-full hover:bg-zinc-700 transition-colors;
+}
